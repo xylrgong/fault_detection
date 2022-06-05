@@ -1,25 +1,29 @@
 import networkx as nx
 from db.db import *
-from utils import transfer_list_dict2dict
+from utils.utils import transfer_list_dict2dict
 
 class NetworkNode(object):
     name = 'Default'
     ip = 'Default'
     mac = 'Default'
+    info = 'Default'
     is_switch = False
     is_server = False
-    reach_node = None
+    reach_node = None  # reach_node is a table like {1:[MAC1, MAC2], 2:[MAC3]}
+    reach_node_list = None  # a list like [MAC1, MAC2, MAC3]
 
-    def __init__(self, name=None, ip=None, mac=None, is_switch=False, is_server=False, reach_node=None):
+    def __init__(self, name=None, ip=None, mac=None, is_switch=False, is_server=False, reach_node=None, info=None, reach_node_list=None):
         self.name = name
         self.ip = ip
         self.mac = mac
         self.is_switch = is_switch
         self.is_server = is_server
         self.reach_node = reach_node
+        self.info = info
+        self.reach_node_list = reach_node_list
 
     def __repr__(self):
-        return "mac=" + self.mac + " name=" + str(self.name) + " type=" + (lambda x, y: "None" if (not x and not y) else "SERVER" if x else "SWITCH")(self.is_server, self.is_switch)
+        return "mac=" + self.mac + " name=" + str(self.name) + " ip=" + str(self.ip) + " type=" + (lambda x, y: "None" if (not x and not y) else "SERVER" if x else "SWITCH")(self.is_server, self.is_switch)
 
     def __str__(self):
         return "Node mac:" + str(self.mac)
@@ -52,30 +56,46 @@ class Topo(object):
     device_details = None
     topo_table = {}
     node_table = {}
+    mac_name_table = {}
     circle_list = None
     update_time = -1
 
     G = nx.DiGraph()
+    G_MAC = nx.DiGraph()
 
     def init_node(self, device_details_list, forward_list):
         cnt = 0
-        for detail in device_details_list:  # detail be like ('mac', 'name', 'ip', 'type')
+        for detail in device_details_list:  # detail be like ('mac', 'name', 'ip', 'type', 'info')
             mac = detail[0]
             name = detail[1]
             ip = detail[2]
             # forward be like ['device_mac', 'dst_mac', 'outport']
             is_switch = (lambda x: True if x == 'switch' else False)(detail[3])
             is_host = (lambda x: True if x == 'host' else False)(detail[3])
+            info = detail[4]
             # reach_node_list can give dict-list like [ [mac1,outport1], [mac2,outport2], [mac,outport1], ...] for current mac
             # reach_node is only for switch node!
             if is_switch:
-                reach_node_list = [[node[2],node[1]] for node in forward_list if node[0] == mac]
-                reach_node_dict = transfer_list_dict2dict(reach_node_list)
+                # port_mac_list like [ [1, MAC1], [1, 'MAC2'], [2, 'MAC3']]
+                # node is a list like ['device_mac', 'dst_mac', outport]
+                port_mac_list = []
+                reach_node_list = []
+                for node in forward_list:
+                    if node[0] == mac:
+                        port_mac_list.append([node[2],node[1]])
+                        if node[1] not in reach_node_list:
+                            reach_node_list.append(node[1])
+                # port_mac_list = [[node[2],node[1]] for node in forward_list if node[0] == mac]
+                # reach_node_list = [node[1] for node in forward_list if node[1] not in reach_node_list]
+                reach_node_dict = transfer_list_dict2dict(port_mac_list)
+
             else:
                 reach_node_dict = None
-            node = NetworkNode(mac=mac, name=name, ip=ip, is_switch=is_switch, is_server=is_host, reach_node=reach_node_dict)
+                reach_node_list = None
+            node = NetworkNode(mac=mac, name=name, ip=ip, is_switch=is_switch, is_server=is_host, reach_node=reach_node_dict, info=info, reach_node_list=reach_node_list)
             # self.node_set.add(node)
-            self.node_table[detail[0]] = node
+            self.node_table[mac] = node
+            self.mac_name_table[mac] = name
             cnt += 1
         log.info("初始化拓扑节点数量{}个".format(cnt))
 
@@ -100,6 +120,8 @@ class Topo(object):
 
             self.G.add_edge(node_src, node_dst, port=list[node_pt_src2dst, node_pt_dst2src])
             self.G.add_edge(node_dst, node_src, port=list[node_pt_dst2src, node_pt_src2dst])
+            self.G_MAC.add_edge(node_src_mac, node_dst_mac, port=node_pt_src2dst)
+            self.G_MAC.add_edge(node_dst_mac, node_src_mac, port=node_pt_dst2src)
 
             self.topo_table[(node_src.mac, node_dst.mac)] = node_pt_src2dst
             self.topo_table[(node_dst.mac, node_src.mac)] = node_pt_dst2src
@@ -108,6 +130,7 @@ class Topo(object):
             self.node_table[node_dst_mac] = node_dst
 
         print(self.node_table)
+
         # print(self.G)
         # print(self.node_set)
 
@@ -179,4 +202,17 @@ if __name__ == "__main__":
     # p = topo.get_node_by_mac(mac='A')
     # print(p)
     print(topo.topo_table['A', 'B'])
+    # reach_node_list = [x for x in topo.node_table['A'].reach_node.values()]
+    # # l = []
+    # # for node_list in t:
+    # #     for item in node_list:
+    # #         if item not in l:
+    # #             l.append(item)
+    # # print(l)
+    # l = []
+    # [l.append(item) for element in reach_node_list for item in element]
+    # print(l)
+
+    print(topo.node_table.values())
+    print(topo.node_table['A'].reach_node_list)
 

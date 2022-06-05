@@ -1,6 +1,5 @@
-from db.db import *
-from fault_handler import *
-from utils import *
+from fault.fault_handler import *
+from utils.utils import *
 
 def zip_fault_list_to_fault_dict_list(key_list, fault_list):
     fault_dict_list = []
