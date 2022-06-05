@@ -1,0 +1,167 @@
+{
+  "hw": {
+    "-5164621852614943976": {
+      "devices": [{
+        "mac": "D",
+        "color": 1,
+        "details": ["交换机D掉线"]
+      }, {
+        "mac": "A",
+        "color": 2,
+        "details": ["与掉线的交换机直连，可能受较大影响"]
+      }, {
+        "mac": "C",
+        "color": 2,
+        "details": ["与掉线的交换机直连，可能受较大影响"]
+      }, {
+        "mac": "B",
+        "color": 2,
+        "details": ["与掉线的交换机直连，可能受较大影响"]
+      }, {
+        "mac": "H",
+        "color": 2,
+        "details": ["由于交换机D掉线，本设备通信可能受影响"]
+      }, {
+        "mac": "F",
+        "color": 2,
+        "details": ["由于交换机D掉线，本设备通信可能受影响"]
+      }],
+      "links": [{
+        "srcMac": "D",
+        "dstMac": "A",
+        "color": 1,
+        "details": ["设备D掉线引起的链路中断"]
+      }, {
+        "srcMac": "D",
+        "dstMac": "B",
+        "color": 1,
+        "details": ["设备D掉线引起的链路中断"]
+      }, {
+        "srcMac": "D",
+        "dstMac": "C",
+        "color": 1,
+        "details": ["设备D掉线引起的链路中断"]
+      }, {
+        "srcMac": "D",
+        "dstMac": "F",
+        "color": 1,
+        "details": ["设备D掉线引起的链路中断"]
+      }, {
+        "srcMac": "D",
+        "dstMac": "G",
+        "color": 1,
+        "details": ["设备D掉线引起的链路中断"]
+      }, {
+        "srcMac": "D",
+        "dstMac": "H",
+        "color": 1,
+        "details": ["设备D掉线引起的链路中断"]
+      }]
+    },
+    "4685526799349444076": {
+      "devices": [{
+        "mac": "D",
+        "color": 2,
+        "details": ["交换机D无法获取代理配置"]
+      }],
+      "links": []
+    },
+    "2248468952609198383": {
+      "devices": [{
+        "mac": "A",
+        "color": 2,
+        "details": ["设备A_name的cpu占用过高", "超过10周期达到50%以上"]
+      }],
+      "links": []
+    },
+    "-6348126469135965181": {
+      "devices": [{
+        "mac": "D",
+        "color": 2,
+        "details": ["设备D_name的mem占用过高", "超过10周期达到50%以上"]
+      }],
+      "links": []
+    },
+    "-3054609118068388172": {
+      "devices": [{
+        "mac": "C",
+        "color": 2,
+        "details": ["设备C_name的disk占用过高", "超过10周期达到50%以上"]
+      }],
+      "links": []
+    },
+    "-5491666964808633865": {
+      "devices": [{
+        "mac": "C",
+        "color": 2,
+        "details": ["硬件故障引起的链路异常"]
+      }, {
+        "mac": "D",
+        "color": 2,
+        "details": ["硬件故障引起的链路异常"]
+      }, {
+        "mac": "H",
+        "color": 2,
+        "details": ["由于C_name与D_name之间的链路异常，通信可能受影响"]
+      }, {
+        "mac": "F",
+        "color": 2,
+        "details": ["由于C_name与D_name之间的链路异常，通信可能受影响"]
+      }],
+      "links": [{
+        "srcMac": "C",
+        "dstMac": "D",
+        "color": 2,
+        "details": ["链路异常", "链路传输数据的错误率:20"]
+      }]
+    }
+  },
+  "proto": {},
+  "if": {},
+  "app": {},
+  "traffic": {},
+  "errors": {
+    "-5164621852614943976": {
+      "type": "硬件故障",
+      "code": "HW_DEVICE_OFFLINE",
+      "name": "设备掉线",
+      "level": 1,
+      "time": 1651766400.0
+    },
+    "4685526799349444076": {
+      "type": "硬件故障",
+      "code": "HW_CONF_ERR",
+      "name": "硬件配置信息无法获取",
+      "level": 2,
+      "time": 1651766400.0
+    },
+    "2248468952609198383": {
+      "type": "硬件故障",
+      "code": "HW_CPU_HIGH",
+      "name": "CPU高占用",
+      "level": 2,
+      "time": 1651766400.0
+    },
+    "-6348126469135965181": {
+      "type": "硬件故障",
+      "code": "HW_MEM_HIGH",
+      "name": "内存高占用",
+      "level": 2,
+      "time": 1651766400.0
+    },
+    "-3054609118068388172": {
+      "type": "硬件故障",
+      "code": "HW_DISK_HIGH",
+      "name": "硬盘高占用",
+      "level": 2,
+      "time": 1651766400.0
+    },
+    "-5491666964808633865": {
+      "type": "硬件故障",
+      "code": "HW_LINK_ERR",
+      "name": "硬件链路故障",
+      "level": 2,
+      "time": 1651766400.0
+    }
+  }
+}

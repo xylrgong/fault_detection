@@ -1,6 +1,5 @@
-from traceback import print_tb
-from fault_handler import *
-import mysql.connector as mysql
+from fault.fault_handler import *
+
 fault_list_done = []
 fault_list_duplicate = []
 a = BaseFault(name='a', number=0, time='2000')
