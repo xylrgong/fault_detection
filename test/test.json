@@ -1,0 +1,94 @@
+
+
+{
+  "hw":
+  {
+    "hash1": {
+      "devices": [
+        { "mac": "aa-bb-cc-dd-ee-ff", "color": 1, "details":["details1", "details2"] }
+      ],
+      "links": [
+        {
+          "srcMac": "aa-bb-cc-dd-ee-ff",
+          "dstMac": "aa-bb-cc-dd-ee-ff",
+          "color": 1,
+          "details":["details1", "details2"]
+        }
+      ]
+    },
+
+    "hash2": {
+      "devices": [
+        { "mac": "aa-bb-cc-dd-ee-ff", "color": 1, "details":["details1", "details2"] }
+      ],
+      "links": [
+        {
+          "srcMac": "aa-bb-cc-dd-ee-ff",
+          "dstMac": "aa-bb-cc-dd-ee-ff",
+          "color": 1,
+          "details":["details1", "details2"]
+        }
+      ]
+    }
+
+  },
+
+  "proto": {
+    "devices": [
+      { "mac": "aa-bb-cc-dd-ee-ff", "color": 1 }
+    ],
+    "links": [
+      {
+        "srcMac": "aa-bb-cc-dd-ee-ff",
+        "dstMac": "aa-bb-cc-dd-ee-ff",
+        "color": 1
+      }
+    ]
+  },
+  "fl": {
+    "devices": [
+      { "mac": "aa-bb-cc-dd-ee-ff", "color": 1 }
+    ],
+    "links": [
+      {
+        "srcMac": "aa-bb-cc-dd-ee-ff",
+        "dstMac": "aa-bb-cc-dd-ee-ff",
+        "color": 1
+      }
+    ]
+  },
+  "int": {
+    "devices": [
+      { "mac": "aa-bb-cc-dd-ee-ff", "color": 1 }
+    ],
+    "links": [
+      {
+        "srcMac": "aa-bb-cc-dd-ee-ff",
+        "dstMac": "aa-bb-cc-dd-ee-ff",
+        "color": 1
+      }
+    ]
+  },
+  "app": {
+    "devices": [
+      { "mac": "aa-bb-cc-dd-ee-ff", "color": 1 }
+    ],
+    "links": [
+      {
+        "srcMac": "aa-bb-cc-dd-ee-ff",
+        "dstMac": "aa-bb-cc-dd-ee-ff",
+        "color": 1
+      }
+    ]
+  },
+  "errors":
+    {
+      "hash1": {
+      "type": "硬件故障",
+      "code": "HW_DEVICE_OFFLINE",
+      "name": "交换机设备掉线",
+      "level": 1,
+      "time": 1651839858005844
+    }
+  }
+}

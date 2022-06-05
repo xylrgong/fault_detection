@@ -1,5 +1,5 @@
 import networkx as nx
-from topo import NetworkNode
+from topo.topo import NetworkNode
 
 G = nx.DiGraph()
 
@@ -25,7 +25,8 @@ G.add_edge("n5", "n4", port=[1,0])
 
 print("图的节点为：", G.nodes)
 print("图的边为", G.edges)
-print("n1节点的邻居为", G.adj["n1"])
+print("n1节点的邻居为", G.adj["n1"].keys())
+print('n1节点的邻居:', [i for i in G.adj['n1']] )
 print("n1->n2边的属性", G["n1"]["n2"])
 print("n2->n1边的属性", G["n2"]["n1"])
 # print(list(G.nodes)[0].mac)
@@ -45,3 +46,21 @@ print(nx.find_cycle(G.to_undirected()))
 
 test = [['n2', 'n5', 'n4'], ['n1', 'n2', 'n4']]
 print([node for circle in test for node in circle])
+
+print(G.nodes)
+
+print(G['n1']['n2']['port'])
+
+print(nx.is_path(G, ['n2', 'n5']))
+
+print('!!!')
+
+edge = []
+n = 'n1'
+for e in G.to_undirected().edges:
+    if n in e:
+        edge.append(e)
+print(edge)
+
+print(list(('n1', x) for x in G.adj['n1']))
+
